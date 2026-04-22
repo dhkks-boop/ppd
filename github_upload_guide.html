@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📖 GitHub 파일 올리기 그림 설명서 — 김동홍TV</title>
+<style>
+:root{
+  --gold:#C8794A;--gold2:#F0A878;
+  --green:#2e7d32;--blue:#1565c0;
+  --red:#c62828;--bg:#f0f4f0;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Malgun Gothic','Apple SD Gothic Neo',sans-serif;background:var(--bg);color:#222;font-size:17px;}
+
+/* 헤더 */
+.top-nav{background:#111;color:#fff;padding:10px 16px;font-size:15px;display:flex;gap:14px;flex-wrap:wrap;justify-content:center;}
+.top-nav a{color:var(--gold2);text-decoration:none;font-weight:bold;}
+.brand-banner{background:linear-gradient(135deg,#1a3a1a,#2e5c2e);color:#fff;padding:16px;text-align:center;}
+.brand-title{font-size:21px;font-weight:900;}
+.brand-title span{color:var(--gold2);}
+.brand-sub{font-size:13px;color:#cde;margin-top:3px;}
+#clock-main{font-size:15px;color:#adf;margin-top:5px;font-weight:bold;}
+
+/* 전체 래퍼 */
+.wrapper{max-width:780px;margin:0 auto;padding:16px;}
+
+/* 단계 헤더 */
+.step-header{
+  display:flex;align-items:center;gap:14px;
+  background:linear-gradient(135deg,var(--blue),#0d47a1);
+  color:#fff;border-radius:16px 16px 0 0;padding:16px 20px;
+  margin-top:28px;
+}
+.step-num{
+  background:#fff;color:var(--blue);
+  font-size:26px;font-weight:900;
+  width:50px;height:50px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,.2);
+}
+.step-header h2{font-size:20px;line-height:1.4;}
+.step-header p{font-size:14px;color:#bbdefb;margin-top:3px;}
+
+/* 화면 모의 */
+.mock-screen{
+  background:#fff;border:3px solid var(--blue);
+  border-radius:0 0 16px 16px;
+  padding:0;overflow:hidden;
+  box-shadow:0 6px 24px rgba(0,0,0,.13);
+  margin-bottom:8px;
+}
+
+/* 브라우저 주소창 */
+.browser-bar{
+  background:#f1f3f4;border-bottom:2px solid #ddd;
+  padding:8px 14px;display:flex;align-items:center;gap:10px;
+}
+.browser-dots{display:flex;gap:5px;}
+.browser-dots span{width:13px;height:13px;border-radius:50%;display:block;}
+.dot-r{background:#ff5f57;}
+.dot-y{background:#febc2e;}
+.dot-g{background:#28c840;}
+.browser-url{
+  background:#fff;border:1px solid #ccc;border-radius:20px;
+  padding:5px 14px;font-size:13px;color:#444;flex:1;font-family:monospace;
+}
+.browser-url b{color:var(--blue);}
+
+/* GitHub 화면 내부 */
+.gh-body{padding:16px 20px;background:#fff;}
+.gh-repo-title{font-size:18px;font-weight:bold;color:#0969da;margin-bottom:4px;}
+.gh-breadcrumb{font-size:13px;color:#888;margin-bottom:14px;}
+
+/* 파일 목록 */
+.gh-file-area{border:1px solid #d0d7de;border-radius:8px;overflow:hidden;margin-bottom:14px;}
+.gh-file-header{background:#f6f8fa;padding:10px 16px;font-size:13px;color:#57606a;border-bottom:1px solid #d0d7de;display:flex;justify-content:space-between;align-items:center;}
+.gh-file-row{display:flex;align-items:center;gap:10px;padding:9px 16px;border-bottom:1px solid #eee;font-size:14px;}
+.gh-file-row:last-child{border-bottom:none;}
+.gh-file-icon{font-size:16px;}
+.gh-file-name{color:#0969da;flex:1;}
+.gh-file-date{color:#888;font-size:12px;}
+
+/* 버튼들 */
+.gh-btn-row{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;}
+.gh-btn{padding:6px 14px;font-size:13px;border-radius:6px;border:1px solid #d0d7de;background:#f6f8fa;cursor:pointer;font-weight:600;color:#24292f;}
+.gh-btn.green{background:#2da44e;color:#fff;border-color:#2da44e;}
+.gh-btn.blue-line{background:#fff;color:#0969da;border-color:#0969da;}
+
+/* 강조 화살표 */
+.arrow-box{
+  background:#fff3cd;border:3px solid #ffc107;
+  border-radius:12px;padding:14px 18px;
+  margin:10px 0;font-size:17px;font-weight:bold;
+  display:flex;align-items:center;gap:12px;
+  color:#7d4e00;
+}
+.arrow-box .arr{font-size:30px;}
+
+/* 클릭 표시 */
+.click-here{
+  display:inline-block;
+  background:#ff1744;color:#fff;
+  font-size:13px;font-weight:bold;
+  padding:3px 10px;border-radius:20px;
+  margin-left:6px;vertical-align:middle;
+  animation:pulse 1s infinite;
+}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.6;}}
+
+/* 드래그 존 */
+.drag-zone{
+  border:3px dashed #0969da;border-radius:12px;
+  background:#f0f7ff;padding:30px;text-align:center;
+  margin:12px 0;color:#0969da;
+}
+.drag-zone .big-icon{font-size:52px;display:block;margin-bottom:8px;}
+.drag-zone b{font-size:18px;}
+.drag-zone p{font-size:14px;color:#666;margin-top:6px;}
+
+/* commit 섹션 */
+.commit-box{background:#f6f8fa;border:1px solid #d0d7de;border-radius:8px;padding:16px;margin:10px 0;}
+.commit-title{font-size:15px;font-weight:bold;margin-bottom:8px;color:#24292f;}
+.commit-input{width:100%;padding:8px 12px;border:1px solid #d0d7de;border-radius:6px;font-size:14px;background:#fff;color:#555;}
+.commit-btn{display:block;width:100%;padding:10px;background:#2da44e;color:#fff;border:none;border-radius:6px;font-size:16px;font-weight:bold;margin-top:10px;cursor:pointer;}
+
+/* Settings 화면 */
+.settings-sidebar{background:#f6f8fa;border-right:1px solid #d0d7de;padding:12px;font-size:14px;}
+.settings-menu-item{padding:8px 12px;border-radius:6px;color:#24292f;margin-bottom:2px;cursor:pointer;}
+.settings-menu-item.active{background:#0969da;color:#fff;font-weight:bold;}
+.pages-section{padding:16px;}
+.pages-branch-select{display:flex;gap:8px;align-items:center;margin:10px 0;}
+.pages-branch-select select{padding:6px 12px;border:1px solid #d0d7de;border-radius:6px;font-size:14px;}
+.pages-save-btn{background:#2da44e;color:#fff;border:none;padding:8px 18px;border-radius:6px;font-size:14px;font-weight:bold;cursor:pointer;}
+.pages-url-result{background:#dafbe1;border:1px solid #2da44e;border-radius:8px;padding:12px;margin-top:12px;font-size:14px;}
+.pages-url-result b{color:var(--green);font-size:16px;}
+
+/* 완료 배너 */
+.success-banner{
+  background:linear-gradient(135deg,#2e7d32,#43a047);
+  color:#fff;border-radius:16px;padding:24px;text-align:center;margin-top:24px;
+}
+.success-banner .big{font-size:52px;display:block;}
+.success-banner h2{font-size:24px;margin:8px 0;}
+.success-banner .url-show{
+  background:rgba(255,255,255,.2);border-radius:10px;
+  padding:12px 18px;font-size:16px;font-family:monospace;
+  margin-top:12px;word-break:break-all;letter-spacing:.5px;
+}
+
+/* 주의사항 */
+.caution{background:#fff3e0;border-left:5px solid #ff9800;border-radius:0 10px 10px 0;padding:12px 16px;margin:10px 0;font-size:15px;line-height:1.8;}
+.tip{background:#e8f5e9;border-left:5px solid var(--green);border-radius:0 10px 10px 0;padding:12px 16px;margin:10px 0;font-size:15px;line-height:1.8;}
+
+/* 목차 */
+.toc{background:#fff;border-radius:14px;padding:18px;box-shadow:0 4px 14px rgba(0,0,0,.08);margin-bottom:20px;}
+.toc h3{font-size:18px;color:var(--blue);margin-bottom:12px;}
+.toc-item{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #eee;font-size:16px;cursor:pointer;color:var(--blue);}
+.toc-item:last-child{border-bottom:none;}
+.toc-item:hover{color:var(--gold);}
+.toc-num{background:var(--blue);color:#fff;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:bold;flex-shrink:0;}
+
+/* 푸터 */
+footer{background:#111;color:#aaa;text-align:center;padding:20px;font-size:14px;margin-top:30px;}
+footer a{color:var(--gold2);text-decoration:none;}
+#footer-clock{color:#7fc;font-size:15px;margin-top:5px;font-weight:bold;}
+
+@media(max-width:500px){
+  .step-header h2{font-size:17px;}
+  .gh-btn-row{gap:5px;}
+}
+</style>
+</head>
+<body>
+
+<!-- 상단 내비 -->
+<div class="top-nav">
+  <a href="https://merry-horse-a0b679.netlify.app" target="_blank">🌐 홈페이지</a>
+  <a href="https://dhkks5908-design.github.io/new-life/" target="_blank">📱 몸편한앱</a>
+  <a href="https://www.youtube.com/@dhkks" target="_blank">▶ 유튜브</a>
+  <a href="https://www.youtube.com/@%EA%B9%80%EB%8F%99%ED%99%8DTV" target="_blank">📺 김동홍TV</a>
+</div>
+
+<!-- 브랜드 배너 -->
+<div class="brand-banner">
+  <div class="brand-title">☀️ <span>김동홍TV</span> · 아침햇살 · 檀童</div>
+  <div class="brand-sub">자부심과 긍지를 가지고 나누며 살자 · 순간을 영원으로</div>
+  <div id="clock-main">⏰ ...</div>
+</div>
+
+<div class="wrapper">
+
+  <!-- 제목 -->
+  <div style="text-align:center;padding:20px 0 10px;">
+    <div style="font-size:42px;">📖</div>
+    <h1 style="font-size:24px;color:var(--blue);margin-top:6px;">GitHub에 파일 올리기</h1>
+    <p style="color:#666;margin-top:6px;font-size:16px;">그림으로 보는 완전 초보 설명서</p>
+  </div>
+
+  <!-- 목차 -->
+  <div class="toc">
+    <h3>📋 전체 순서 (총 5단계)</h3>
+    <div class="toc-item" onclick="document.getElementById('s1').scrollIntoView({behavior:'smooth'})">
+      <div class="toc-num">1</div> ppd 저장소 열기
+    </div>
+    <div class="toc-item" onclick="document.getElementById('s2').scrollIntoView({behavior:'smooth'})">
+      <div class="toc-num">2</div> 파일 올리기 화면으로 이동
+    </div>
+    <div class="toc-item" onclick="document.getElementById('s3').scrollIntoView({behavior:'smooth'})">
+      <div class="toc-num">3</div> index.html 파일 끌어다 놓기
+    </div>
+    <div class="toc-item" onclick="document.getElementById('s4').scrollIntoView({behavior:'smooth'})">
+      <div class="toc-num">4</div> Commit (저장) 버튼 누르기
+    </div>
+    <div class="toc-item" onclick="document.getElementById('s5').scrollIntoView({behavior:'smooth'})">
+      <div class="toc-num">5</div> Pages 설정 → 인터넷 주소 완성!
+    </div>
+  </div>
+
+  <!-- ══════ STEP 1 ══════ -->
+  <div id="s1">
+  <div class="step-header">
+    <div class="step-num">1</div>
+    <div>
+      <h2>ppd 저장소를 클릭해서 열기</h2>
+      <p>GitHub 첫 화면 왼쪽에서 찾으세요</p>
+    </div>
+  </div>
+  <div class="mock-screen">
+    <div class="browser-bar">
+      <div class="browser-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
+      <div class="browser-url"><b>github.com</b></div>
+    </div>
+    <div class="gh-body">
+      <div style="display:flex;gap:16px;">
+        <!-- 왼쪽 사이드바 -->
+        <div style="width:220px;flex-shrink:0;">
+          <div style="font-size:13px;font-weight:bold;color:#57606a;margin-bottom:8px;">Top repositories</div>
+          <div style="background:#f6f8fa;border:1px solid #d0d7de;border-radius:6px;padding:8px 10px;font-size:13px;color:#888;margin-bottom:8px;">🔍 Find a repository...</div>
+          <div style="font-size:14px;color:#0969da;padding:5px 4px;display:flex;align-items:center;gap:6px;">📁 dhkks5908-design/new-life</div>
+          <div style="font-size:14px;color:#0969da;padding:5px 4px;display:flex;align-items:center;gap:6px;">📁 dhkks5908-design/dhkks</div>
+          <div style="font-size:14px;padding:5px 4px;display:flex;align-items:center;gap:6px;background:#fff3cd;border-radius:6px;border:2px solid #ffc107;font-weight:bold;color:#7d4e00;">
+            📁 dhkks5908-design/ppd
+            <span class="click-here">← 여기!</span>
+          </div>
+          <div style="font-size:14px;color:#0969da;padding:5px 4px;display:flex;align-items:center;gap:6px;">📁 dhkks5908-design/kimdonghong</div>
+        </div>
+        <!-- 오른쪽 -->
+        <div style="flex:1;color:#888;font-size:14px;padding-top:10px;">
+          GitHub 대시보드 화면입니다.<br><br>
+          왼쪽 목록에서<br>
+          <b style="color:#c62828;">dhkks5908-design/ppd</b> 를<br>
+          클릭하세요!
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <!-- ══════ STEP 2 ══════ -->
+  <div id="s2">
+  <div class="step-header">
+    <div class="step-num">2</div>
+    <div>
+      <h2>"uploading an existing file" 클릭</h2>
+      <p>ppd 저장소 안 화면에서 파란 글씨 클릭</p>
+    </div>
+  </div>
+  <div class="mock-screen">
+    <div class="browser-bar">
+      <div class="browser-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
+      <div class="browser-url"><b>github.com</b>/dhkks5908-design/<b>ppd</b></div>
+    </div>
+    <div class="gh-body">
+      <div class="gh-breadcrumb">dhkks5908-design / ppd</div>
+      <div class="gh-repo-title">📁 ppd <span style="font-size:13px;background:#e1e4e8;padding:2px 8px;border-radius:20px;color:#57606a;font-weight:normal;">Public</span></div>
+
+      <div style="background:#ddf4ff;border:1px solid #0969da;border-radius:8px;padding:16px;margin:14px 0;font-size:14px;color:#0969da;">
+        <b>Quick setup</b> — if you've done this kind of thing before<br><br>
+        Get started by <span style="color:#0969da;text-decoration:underline;cursor:pointer;font-weight:bold;">creating a new file</span> or 
+        <span style="background:#ff1744;color:#fff;padding:2px 10px;border-radius:4px;font-weight:bold;font-size:14px;cursor:pointer;">uploading an existing file ← 여기 클릭!</span>
+        <br><br>
+        <span style="color:#888;font-size:12px;">We recommend every repository include a README, LICENSE, and .gitignore.</span>
+      </div>
+
+      <div style="font-size:13px;color:#57606a;background:#f6f8fa;border:1px solid #d0d7de;border-radius:6px;padding:14px;margin-top:8px;">
+        <b>...or create a new repository on the command line</b><br>
+        <span style="color:#888;">echo "# ppd" >> README.md</span><br>
+        <span style="color:#888;">git init ...</span>
+      </div>
+    </div>
+  </div>
+  <div class="arrow-box">
+    <span class="arr">👆</span>
+    <span>빨간 박스 <b>"uploading an existing file"</b> 을 클릭하세요!</span>
+  </div>
+  </div>
+
+  <!-- ══════ STEP 3 ══════ -->
+  <div id="s3">
+  <div class="step-header">
+    <div class="step-num">3</div>
+    <div>
+      <h2>index.html 파일을 끌어다 놓기</h2>
+      <p>파일 업로드 화면이 나오면 — 드래그 앤 드롭!</p>
+    </div>
+  </div>
+  <div class="mock-screen">
+    <div class="browser-bar">
+      <div class="browser-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
+      <div class="browser-url"><b>github.com</b>/dhkks5908-design/ppd/<b>upload</b></div>
+    </div>
+    <div class="gh-body">
+      <div class="gh-breadcrumb">dhkks5908-design / ppd / <b>Upload files</b></div>
+
+      <div class="drag-zone" id="dropzone"
+        ondragover="event.preventDefault();this.style.background='#bbdefb';"
+        ondragleave="this.style.background='#f0f7ff';"
+        ondrop="event.preventDefault();this.style.background='#f0f7ff';document.getElementById('drop-ok').style.display='block';">
+        <span class="big-icon">📂</span>
+        <b>여기에 index.html 파일을 끌어다 놓으세요</b>
+        <p>Drag files here to add them to your repository</p>
+        <p style="margin-top:10px;font-size:13px;">또는 아래 버튼 클릭</p>
+        <div style="margin-top:10px;">
+          <span style="background:#0969da;color:#fff;padding:7px 16px;border-radius:6px;font-size:14px;font-weight:bold;">choose your files</span>
+        </div>
+      </div>
+      <div id="drop-ok" style="display:none;background:#dafbe1;border:2px solid #2da44e;border-radius:8px;padding:12px;text-align:center;font-weight:bold;color:#2da44e;font-size:16px;">
+        ✅ index.html 파일이 추가되었습니다!
+      </div>
+    </div>
+  </div>
+  <div class="tip">
+    💡 <b>끌어다 놓는 방법:</b><br>
+    ① 바탕화면에서 <b>index.html</b> 파일 위에 마우스를 올립니다<br>
+    ② 마우스 왼쪽 버튼을 <b>꾹 누른 채로</b><br>
+    ③ 위 점선 박스 안으로 <b>끌고 와서 손을 뗍니다</b>
+  </div>
+  <div class="caution">
+    ⚠ <b>파일 이름이 반드시 <span style="color:var(--red);">index.html</span> 이어야 합니다!</b><br>
+    다른 이름이면 인터넷 주소로 열리지 않아요.
+  </div>
+  </div>
+
+  <!-- ══════ STEP 4 ══════ -->
+  <div id="s4">
+  <div class="step-header">
+    <div class="step-num">4</div>
+    <div>
+      <h2>초록 버튼 "Commit changes" 클릭</h2>
+      <p>파일 올린 후 — 맨 아래로 스크롤해서 저장!</p>
+    </div>
+  </div>
+  <div class="mock-screen">
+    <div class="browser-bar">
+      <div class="browser-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
+      <div class="browser-url"><b>github.com</b>/dhkks5908-design/ppd/<b>upload</b></div>
+    </div>
+    <div class="gh-body">
+      <!-- 파일 올라간 상태 -->
+      <div style="background:#dafbe1;border:1px solid #2da44e;border-radius:8px;padding:10px 14px;margin-bottom:14px;font-size:14px;color:#1a7f37;display:flex;align-items:center;gap:8px;">
+        ✅ <b>index.html</b> &nbsp;|&nbsp; 47,893 bytes &nbsp;<span style="color:#888;">준비 완료</span>
+      </div>
+
+      <!-- Commit 박스 -->
+      <div class="commit-box">
+        <div class="commit-title">📝 Commit changes</div>
+        <input class="commit-input" type="text" value="Add files via upload" readonly>
+        <div style="font-size:13px;color:#888;margin-top:6px;">추가 설명 (선택사항 — 그냥 비워도 됩니다)</div>
+        <textarea style="width:100%;height:60px;border:1px solid #d0d7de;border-radius:6px;padding:8px;font-size:13px;margin-top:6px;resize:none;color:#888;" readonly placeholder="Add an optional extended description..."></textarea>
+
+        <div style="margin-top:10px;font-size:13px;color:#57606a;">
+          <label style="display:flex;align-items:center;gap:6px;">
+            <input type="radio" checked> <b>Commit directly to the <span style="color:#0969da;">main</span> branch</b>
+          </label>
+        </div>
+
+        <button class="commit-btn" onclick="this.textContent='✅ 저장 완료!';this.style.background='#1a7f37';">
+          ✅ Commit changes &nbsp;← 여기 클릭!
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="arrow-box">
+    <span class="arr">👆</span>
+    <span>초록색 <b>"Commit changes"</b> 버튼을 클릭하면 저장됩니다!</span>
+  </div>
+  </div>
+
+  <!-- ══════ STEP 5 ══════ -->
+  <div id="s5">
+  <div class="step-header">
+    <div class="step-num">5</div>
+    <div>
+      <h2>Settings → Pages → main 선택 → Save</h2>
+      <p>인터넷 주소를 활성화하는 마지막 단계!</p>
+    </div>
+  </div>
+
+  <div style="background:#fff;border-radius:12px;padding:14px;margin-bottom:10px;border:2px solid var(--blue);">
+    <b style="color:var(--blue);font-size:17px;">5-1. 상단 메뉴에서 Settings 클릭</b>
+  </div>
+  <div class="mock-screen">
+    <div class="browser-bar">
+      <div class="browser-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
+      <div class="browser-url"><b>github.com</b>/dhkks5908-design/<b>ppd</b></div>
+    </div>
+    <div class="gh-body" style="padding:10px 16px;">
+      <div style="display:flex;gap:0;border-bottom:2px solid #d0d7de;margin-bottom:14px;overflow-x:auto;">
+        <div style="padding:10px 14px;font-size:14px;color:#57606a;">💻 Code</div>
+        <div style="padding:10px 14px;font-size:14px;color:#57606a;">⚠ Issues</div>
+        <div style="padding:10px 14px;font-size:14px;color:#57606a;">🔀 Pull requests</div>
+        <div style="padding:10px 14px;font-size:14px;color:#57606a;">▶ Actions</div>
+        <div style="padding:10px 14px;font-size:14px;background:#fff3cd;border-bottom:3px solid #ffc107;font-weight:bold;color:#7d4e00;">
+          ⚙ Settings <span class="click-here">← 클릭!</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="background:#fff;border-radius:12px;padding:14px;margin:14px 0 10px;border:2px solid var(--blue);">
+    <b style="color:var(--blue);font-size:17px;">5-2. 왼쪽 메뉴에서 Pages 클릭</b>
+  </div>
+  <div class="mock-screen">
+    <div class="browser-bar">
+      <div class="browser-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
+      <div class="browser-url"><b>github.com</b>/dhkks5908-design/ppd/<b>settings</b></div>
+    </div>
+    <div class="gh-body" style="padding:0;">
+      <div style="display:flex;min-height:200px;">
+        <div class="settings-sidebar" style="width:180px;">
+          <div class="settings-menu-item">General</div>
+          <div class="settings-menu-item">Access</div>
+          <div class="settings-menu-item">Branches</div>
+          <div class="settings-menu-item" style="background:#fff3cd;border:2px solid #ffc107;color:#7d4e00;font-weight:bold;">
+            📄 Pages <span class="click-here">← 클릭!</span>
+          </div>
+          <div class="settings-menu-item">Security</div>
+        </div>
+        <div class="pages-section" style="flex:1;">
+          <b style="font-size:15px;color:#24292f;">GitHub Pages</b>
+          <p style="font-size:13px;color:#888;margin-top:4px;">Pages 메뉴를 클릭하면 이런 화면이 나옵니다</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="background:#fff;border-radius:12px;padding:14px;margin:14px 0 10px;border:2px solid var(--blue);">
+    <b style="color:var(--blue);font-size:17px;">5-3. Branch를 "main"으로 선택 → Save 클릭</b>
+  </div>
+  <div class="mock-screen">
+    <div class="browser-bar">
+      <div class="browser-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
+      <div class="browser-url"><b>github.com</b>/dhkks5908-design/ppd/<b>settings/pages</b></div>
+    </div>
+    <div class="gh-body">
+      <b style="font-size:16px;">GitHub Pages</b>
+      <p style="font-size:13px;color:#888;margin:6px 0 14px;">GitHub Pages is currently disabled. Select a source below to enable GitHub Pages for this repository.</p>
+
+      <div style="background:#f6f8fa;border:1px solid #d0d7de;border-radius:8px;padding:16px;margin-bottom:12px;">
+        <b style="font-size:14px;">Build and deployment</b><br>
+        <div style="font-size:13px;color:#57606a;margin:8px 0;">Source</div>
+        <select style="padding:6px 12px;border:1px solid #d0d7de;border-radius:6px;font-size:14px;margin-bottom:10px;">
+          <option>Deploy from a branch</option>
+        </select>
+        <br>
+        <div style="font-size:13px;color:#57606a;margin:8px 0;">Branch</div>
+        <div class="pages-branch-select">
+          <select style="padding:6px 12px;border:2px solid #ffc107;border-radius:6px;font-size:14px;font-weight:bold;" id="branch-sel">
+            <option value="none">None</option>
+            <option value="main" selected>main ← 이걸 선택!</option>
+          </select>
+          <select style="padding:6px 12px;border:1px solid #d0d7de;border-radius:6px;font-size:14px;">
+            <option>/ (root)</option>
+          </select>
+          <button class="pages-save-btn" onclick="document.getElementById('pages-result').style.display='block';this.textContent='✅ 저장됨!';">
+            Save ← 클릭!
+          </button>
+        </div>
+      </div>
+
+      <div class="pages-url-result" id="pages-result" style="display:none;">
+        🎉 Your site is being published at:<br>
+        <b>https://dhkks5908-design.github.io/ppd/</b>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <!-- ══════ 완료! ══════ -->
+  <div class="success-banner">
+    <span class="big">🎉</span>
+    <h2>완료! 인터넷에서 열립니다!</h2>
+    <p style="font-size:16px;color:#c8e6c9;margin-top:6px;">1~2분 기다린 후 아래 주소로 접속하세요</p>
+    <div class="url-show">
+      🌐 https://dhkks5908-design.github.io/ppd/
+    </div>
+    <div style="margin-top:14px;">
+      <a href="https://dhkks5908-design.github.io/ppd/" target="_blank"
+        style="background:#fff;color:var(--green);padding:12px 24px;border-radius:10px;font-size:17px;font-weight:bold;text-decoration:none;display:inline-block;">
+        🌐 바로 열어보기
+      </a>
+    </div>
+  </div>
+
+  <!-- 전체 요약 -->
+  <div style="background:#fff;border-radius:16px;padding:20px;margin-top:20px;box-shadow:0 4px 14px rgba(0,0,0,.08);">
+    <h3 style="color:var(--blue);font-size:19px;margin-bottom:14px;">📋 전체 순서 한눈에 보기</h3>
+    <div style="line-height:2.2;font-size:16px;">
+      <div style="padding:6px 0;border-bottom:1px solid #eee;">1️⃣ GitHub 왼쪽에서 <b>dhkks5908-design/ppd</b> 클릭</div>
+      <div style="padding:6px 0;border-bottom:1px solid #eee;">2️⃣ <b>uploading an existing file</b> (파란 글씨) 클릭</div>
+      <div style="padding:6px 0;border-bottom:1px solid #eee;">3️⃣ <b>index.html</b> 파일 끌어다 놓기</div>
+      <div style="padding:6px 0;border-bottom:1px solid #eee;">4️⃣ <b>Commit changes</b> 초록 버튼 클릭</div>
+      <div style="padding:6px 0;border-bottom:1px solid #eee;">5️⃣ <b>Settings → Pages → main → Save</b></div>
+      <div style="padding:6px 0;color:var(--green);font-weight:bold;">🎉 <b>https://dhkks5908-design.github.io/ppd/</b> 완성!</div>
+    </div>
+  </div>
+
+  <div class="caution" style="margin-top:16px;">
+    ❓ <b>막히는 부분 있으면 화면 사진 찍어서 보내주세요!</b><br>
+    어느 단계인지 바로 확인해서 도와드리겠습니다 😊
+  </div>
+
+</div><!-- wrapper end -->
+
+<!-- 푸터 -->
+<footer>
+  <div>☀️ <a href="https://merry-horse-a0b679.netlify.app" target="_blank">김동홍TV · 아침햇살 · 檀童</a></div>
+  <div style="margin-top:4px;">
+    <a href="https://merry-horse-a0b679.netlify.app" target="_blank">🌐 홈페이지</a> &nbsp;|&nbsp;
+    <a href="https://dhkks5908-design.github.io/new-life/" target="_blank">📱 몸편한앱</a> &nbsp;|&nbsp;
+    <a href="https://www.youtube.com/@dhkks" target="_blank">▶ 유튜브</a>
+  </div>
+  <div id="footer-clock"></div>
+  <div style="margin-top:6px;">© 2026 김동홍TV. All rights reserved.</div>
+</footer>
+
+<script>
+const DAYS=['일','월','화','수','목','금','토'];
+function updateClock(){
+  const n=new Date();
+  const s=`${n.getFullYear()}년 ${n.getMonth()+1}월 ${n.getDate()}일 (${DAYS[n.getDay()]}) `+
+    (n.getHours()<12?'오전 ':'오후 ')+
+    `${n.getHours()%12||12}:${String(n.getMinutes()).padStart(2,'0')}:${String(n.getSeconds()).padStart(2,'0')}`;
+  document.getElementById('clock-main').textContent='⏰ '+s;
+  document.getElementById('footer-clock').textContent=s;
+}
+setInterval(updateClock,1000);updateClock();
+</script>
+</body>
+</html>
